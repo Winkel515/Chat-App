@@ -9,19 +9,33 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIO(server);
 
-// console.log(__dirname + '/../public');
-
 app.use(express.static(publicPath));
 
 io.on('connection', function(socket) {
     console.log('New user connected');
+    
+    socket.emit('welcomeMessage', {
+        text: 'Whale cum!',
+        from: 'Admin'
+    })
+
+    socket.broadcast.emit('newUser', {
+        text: 'New User has joined the chat room',
+        from: 'Admin'
+    })
 
     socket.on('createMessage', (message) => {
-        io.emit('newMessage', {
+        io.emit('newMessage', { // io send to everyone while socket sends to a single person
             from: message.from,
             text: message.text,
             createdAt: new Date().getTime()
-        }) // io send to everyone while socket sends to a single person
+        })
+
+        // socket.broadcast.emit('newMessage', {
+        //     from: message.from,
+        //     text: message.text,
+        //     createdAt: new Date().getTime()
+        // })
     })
 
     socket.on('disconnect', function(){
