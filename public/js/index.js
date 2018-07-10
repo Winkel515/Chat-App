@@ -1,5 +1,8 @@
 var socket = io(); // This variable create connection between server and client "REAL TIME!!!"
-var userName = prompt('Welcome to Winkel\'s Chat App!\nPlease enter your name:')
+var userName = prompt('Welcome to Winkel\'s Chat App!\nPlease enter your name:');
+while(!userName){
+    userName = prompt('No name detected. Please enter your name:')
+}
 
 function addMessage (newMessage){
     var li = $('<li></li>');
