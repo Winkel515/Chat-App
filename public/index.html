@@ -10,16 +10,6 @@
     <p>Welcome to the Chat App</p>
 
     <script src="/socket.io/socket.io.js"></script>
-    <script>
-        var socket = io(); // This variable create connection between server and client "REAL TIME!!!"
-
-        socket.on('connect', () => {
-            console.log('Connected to server')
-        });
-
-        socket.on('disconnect', () => {
-            console.log('Servers are down :(')
-        })
-    </script>
+    <script src="/js/index.js"></script>
 </body>
 </html>
