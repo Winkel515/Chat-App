@@ -16,25 +16,13 @@ app.use(express.static(publicPath));
 io.on('connection', function(socket) {
     console.log('New user connected');
 
-    // socket.emit('newEmail', {
-    //     from: 'winkel515@hotmail.com',
-    //     text: 'You\'re fired!',
-    //     createdAt: 123
-    // })
-
-    // socket.on('createEmail', (newEmail) => {
-    //     console.log('createEmail:',newEmail);
-    // })
-
     socket.on('createMessage', (message) => {
-        console.log(message);
+        io.emit('newMessage', {
+            from: message.from,
+            text: message.text,
+            createdAt: new Date().getTime()
+        }) // io send to everyone while socket sends to a single person
     })
-    
-    socket.emit('newMessage', {
-        text: 'BROOO!!!',
-        from: 'Buddy', 
-        createdAt: new Date()
-    });
 
     socket.on('disconnect', function(){
         console.log('User has disconnected')

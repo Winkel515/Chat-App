@@ -2,11 +2,6 @@ var socket = io(); // This variable create connection between server and client 
 
 socket.on('connect', function(){
     console.log('Connected to server')
-
-    socket.emit('createMessage', {
-        from: 'Winkel',
-        text: 'Yo'
-    })
 });
 
 socket.on('disconnect', function() {
