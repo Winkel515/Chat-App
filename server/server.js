@@ -3,6 +3,7 @@ const http = require('http');
 const express = require('express');
 const socketIO = require('socket.io');
 
+const {generateMessage} = require('./utils/message');
 const publicPath = path.join(__dirname, '../public');
 const port = process.env.PORT || 3000;
 const app = express();
@@ -13,16 +14,10 @@ app.use(express.static(publicPath));
 
 io.on('connection', function(socket) {
     console.log('New user connected');
-    
-    socket.emit('welcomeMessage', {
-        text: 'Whale cum!',
-        from: 'Admin'
-    })
 
-    socket.broadcast.emit('newUser', {
-        text: 'New User has joined the chat room',
-        from: 'Admin'
-    })
+    socket.emit('welcomeMessage', generateMessage('Admin', 'Whale Cum!'))
+
+    socket.broadcast.emit('newUser', generateMessage('Admin', 'New User has joined the chat room'));
 
     socket.on('createMessage', (message) => {
         io.emit('newMessage', { // io send to everyone while socket sends to a single person
