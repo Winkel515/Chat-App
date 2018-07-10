@@ -1,4 +1,4 @@
-var generateMessage = (from, text) => {
+var generateMessage =  (from, text) => {
     return {
         from,
         text,
