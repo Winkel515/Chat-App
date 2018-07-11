@@ -26,10 +26,12 @@ io.on('connection', function(socket) {
 
     socket.on('disconnect', function(){
         console.log('User has disconnected')
+        socket.broadcast.emit('newMessage', generateMessage('Admin', `${socket['userName']} has disconnected. Nobody liked him/her (woah this chat app is polically correct!?)`));
     })
 
-    socket.on('newUserName', (userName) => {
-        socket.broadcast.emit('adminMessage', generateMessage('Admin', `${userName} has joined the shit show...`))
+    socket.on('saveUserName', (userName) => {
+        socket.broadcast.emit('adminMessage', generateMessage('Admin', `${userName} has joined the chat room.`));
+        socket['userName'] = userName;
     })
 });
 

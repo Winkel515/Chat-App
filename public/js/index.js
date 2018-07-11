@@ -16,7 +16,7 @@ function addMessage (newMessage, textColor){
         var textColor = 'black';
         retard = true;
     }
-    var li = $(`<li style="list-style-type: none; color: ${textColor}; text-align: center; background-color: ${zebra}; color: ${textColor}"></li>`);
+    var li = $(`<li style="list-style-type: none; text-align: center; background-color: ${zebra}; color: ${textColor}"></li>`);
     li.text(`${newMessage.from}: ${newMessage.text}`);
     $('#messages').append(li);
 }
@@ -31,12 +31,8 @@ var generateMessage = function (from, text) {
 
 socket.on('connect', function(){
     console.log('Connected to server');
-    addMessage(generateMessage('Admin', `Welcome ${userName}!`), 'red')
+    addMessage(generateMessage('Admin', `Welcome ${userName}!`))
 });
-
-socket.on('disconnect', function() {
-    console.log('Servers are down')
-})
 
 socket.on('newMessage', function(newMessage) {
     console.log(newMessage);
@@ -48,14 +44,7 @@ socket.on('adminMessage', function(newMessage) {
     addMessage(newMessage, 'red');
 })
 
-socket.on('welcomeUser', function() {
-    addMessage({
-        from: 'Admin',
-        text: `Welcome ${userName}!`
-    })
-})
-
-socket.emit('newUserName', userName);
+socket.emit('saveUserName', userName);
 
 $('#message-form').on('submit', function(e) {
     e.preventDefault();
