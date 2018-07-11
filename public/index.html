@@ -6,15 +6,18 @@
     <title>Cancer Chat</title> 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
-<body>
-    <p>Welcome to the Chat App</p>
-
+<body style="background-color: #f6ff00">
+    <h1 style="text-align:center">Welcome to the Chat App</h1>
+    <div style="margin: 0 auto; width: 500px">
     <ol id="messages"></ol>
 
     <form id="message-form">
-        <input name="message" type="text" placeholder="Type a message..."/>
-        <button>Send</button>
+        <div style="margin: 0 auto; width: 213px;">
+            <input name="message" type="text" placeholder="Type a message..."/>
+            <button>Send</button>
+        </div>
     </form>
+    </div>
 
     <script src="/socket.io/socket.io.js"></script>
     <script src="/js/libs/jquery-3.3.1.min.js"></script>

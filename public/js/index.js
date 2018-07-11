@@ -4,14 +4,34 @@ while(!userName){
     userName = prompt('No name detected. Please enter your name:')
 }
 
-function addMessage (newMessage){
-    var li = $('<li></li>');
+var retard = true;
+
+function addMessage (newMessage, textColor){
+    if(retard){
+        var zebra = 'black';
+        var textColor = 'white';
+        retard = false;
+    } else {
+        var zebra = 'white';
+        var textColor = 'black';
+        retard = true;
+    }
+    var li = $(`<li style="list-style-type: none; color: ${textColor}; text-align: center; background-color: ${zebra}; color: ${textColor}"></li>`);
     li.text(`${newMessage.from}: ${newMessage.text}`);
     $('#messages').append(li);
 }
 
+var generateMessage = function (from, text) {
+    return {
+        from,
+        text,
+        createdAt: new Date().getTime()
+    };
+};
+
 socket.on('connect', function(){
-    console.log('Connected to server')
+    console.log('Connected to server');
+    addMessage(generateMessage('Admin', `Welcome ${userName}!`), 'red')
 });
 
 socket.on('disconnect', function() {
@@ -21,6 +41,11 @@ socket.on('disconnect', function() {
 socket.on('newMessage', function(newMessage) {
     console.log(newMessage);
     addMessage(newMessage);
+})
+
+socket.on('adminMessage', function(newMessage) {
+    console.log(newMessage);
+    addMessage(newMessage, 'red');
 })
 
 socket.on('welcomeUser', function() {
